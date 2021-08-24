@@ -14,9 +14,9 @@ from PIL import Image
 
 
 image = Image.open('MYLOGO.jpg')
-st.image(image,caption='OPSBENTECH',width=100) # ada a logo
+st.image(image,caption='MYCAPTION',width=100) # ada a logo
 
-st.title('Exploratory Data Analysis Tool with Streamlit for OPS BEN TECH')
+st.title('Exploratory Data Analysis Tool with Streamlit')
 st.write('This tool is designed to speed up the EDA process from multiple data sources') 
 
 st.sidebar.markdown("""Browse to your file""")
@@ -47,8 +47,8 @@ if option == 'csv':
 elif  option == 'sql':
     
     sql_conn = pyodbc.connect('DRIVER={ODBC Driver 13 for SQL Server}; \
-                                SERVER=WIN-BACKUP; \
-                                DATABASE=OBT; \
+                                SERVER=SERVERNAME; \
+                                DATABASE=DATABASENAME; \
                                 Trusted_Connection=yes')
     schema = st.text_input('Enter Schema')
     table = st.text_input('Enter Table')
