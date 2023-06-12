@@ -13,6 +13,7 @@ import pyodbc
 from PIL import Image
 
 
+
 image = Image.open('MYLOGO.jpg')
 st.image(image,caption='MYCAPTION',width=100) # ada a logo
 
