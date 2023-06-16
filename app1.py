@@ -15,10 +15,10 @@ uploaded_file = 'https://raw.githubusercontent.com/plotly/datasets/master/gapmin
 app = dash.Dash(__name__, external_stylesheets = [dbc.themes.BOOTSTRAP])
 
 my_title = dcc.Markdown(children = '# OPSBENTECH - An App For Speeding Exploratory Data Exploration')
-server = dcc.Input(id = 'server', type = 'text', value = 'server', debounce = False)
-database = dcc.Input(id = 'database', type = 'text', value = 'database',  debounce = False)
-query = dcc.Input(id = 'query', type = 'text', value = 'type query here',  debounce = False, size ='170' )
-sample_percent = dcc.Input(id  = 'sample', type = 'number', value = 1,  debounce = False)
+server = dcc.Input(id = 'server', type = 'text', value = 'server')
+database = dcc.Input(id = 'database', type = 'text', value = 'database')
+query = dcc.Input(id = 'query', type = 'text', value = 'type query here', size ='170' )
+sample_percent = dcc.Input(id  = 'sample', type = 'number', value = 50)
 selection = dcc.Dropdown(options = ['csv', 'Database'], value = 'csv', id = 'source_type')
 
 
@@ -49,46 +49,45 @@ app.layout = dbc.Container(
 
 @app.callback(
     Output(component_id = 'data1', component_property = 'data'),
-    Input(component_id = 'source_type', component_property = 'value')
+    Input(component_id = 'source_type', component_property = 'value'),
+    Input(component_id = 'sample', component_property = 'value')
 
 )
-def update_table(selection):
-    df = load_data(selection)
+def update_table(selected, samples):
+    df = load_data(selected, samples)
     return df.to_dict()
     
 
-def load_data(selection):
+def load_data(selected, samples):
 
-    df = None
-    if selection == 'csv':
+    fulldf = None
+    if selected == 'csv':
         if uploaded_file is not None :
-            df = pd.read_csv(uploaded_file)
+            fulldf = pd.read_csv(uploaded_file)
             
-    elif selection == 'sql' and database and server and query:
+    elif selected == 'sql' and database and server and query:
          sql_conn = pyodbc.connect('DRIVER={ODBC Driver 13 for SQL Server}; \
                             SERVER=server; \
                             DATABASE=database; \
                             Trusted_Connection=yes')
       
-         df = pd.read_sql(query, sql_conn,coerce_float=True)
-        
+         fulldf = pd.read_sql(query, sql_conn,coerce_float=True)
 
-    return df
+    if fulldf is not None:   
+        newdf = fulldf.sample(frac=samples/100)
 
-fulldf = load_data(selection)
+        # drop columns that are all nulls
 
-if fulldf is not None:
-    y = []
-    newdf = fulldf.sample(frac=sample_percent/100)
-
-    # drop columns that are all nulls
-
-    newdf.dropna(axis='columns', how='all', inplace=True)
-  
- 
+        newdf = newdf.dropna(axis='columns', how='all', inplace=True)
     
-    profile = ProfileReport(fulldf, title="Pandas Profiling Report")
-    profile.to_file("assets/report.html")
+    
+        
+        profile = ProfileReport(newdf, title="Pandas Profiling Report")
+        profile.to_file("assets/report.html")
+
+    return newdf
+    
+
 
 
 
