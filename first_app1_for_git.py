@@ -2,20 +2,20 @@
 # This program uses pandas profiling with streamlit to help speed up Exploratory Data Analysis (EDA)
 # It allows the user to select either csv or a database as the source of data
 
-from pandas_profiling.config import Correlation, Correlations
+from ydata_profiling.config import Correlation, Correlations
 import streamlit as st
 import pandas as pd
 import numpy as np
-from pandas_profiling import ProfileReport
-from streamlit.caching import cache
-from streamlit_pandas_profiling import st_profile_report
+from ydata_profiling import ProfileReport
+#from streamlit.caching import cache
+
 import pyodbc
 from PIL import Image
 
 
 
-image = Image.open('MYLOGO.jpg')
-st.image(image,caption='MYCAPTION',width=100) # ada a logo
+#image = Image.open('MYLOGO.jpg')
+#st.image(image,caption='MYCAPTION',width=100) # ada a logo
 
 st.title('Exploratory Data Analysis Tool with Streamlit')
 st.write('This tool is designed to speed up the EDA process from multiple data sources') 
@@ -102,9 +102,10 @@ if fulldf is not None:
 
     
     exp_data[deccols].apply(pd.to_numeric)
-    
-    rp = ProfileReport(exp_data, minimal=mini, explorative=explo)
+    if not  exp_data.empty:
+        rp = ProfileReport(exp_data)
 
     #st_profile_report(rp)
-    rp.to_file('profile output.html') # run exploration to html output
+        rp.to_file('profile output.html') # run exploration to html output
+        
 
