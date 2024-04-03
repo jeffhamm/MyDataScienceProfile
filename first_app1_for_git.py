@@ -2,7 +2,7 @@
 # This program uses pandas profiling with streamlit to help speed up Exploratory Data Analysis (EDA)
 # It allows the user to select either csv or a database as the source of data
 
-from ydata_profiling.config import Correlation, Correlations
+import ydata_profiling
 import streamlit as st
 import pandas as pd
 import numpy as np
