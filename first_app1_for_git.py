@@ -108,6 +108,6 @@ if fulldf is not None:
 
     #st_profile_report(rp)
         #rp.to_file('profile output.html') # run exploration to html output
-        components.html(rp, height=800, width=1200)
+        components.html(rp, height=..., width=...)
         
 
