@@ -1,0 +1,3 @@
+ydata_profiling
+streamlit
+pyodbc
