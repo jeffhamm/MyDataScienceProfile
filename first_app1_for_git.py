@@ -7,6 +7,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from ydata_profiling import ProfileReport
+import streamlit.components.v1 as components
 #from streamlit.caching import cache
 
 import pyodbc
@@ -103,9 +104,10 @@ if fulldf is not None:
     
     exp_data[deccols].apply(pd.to_numeric)
     if not  exp_data.empty:
-        rp = ProfileReport(exp_data)
+        rp = ProfileReport(exp_data).to_html()
 
     #st_profile_report(rp)
-        rp.to_notebook_iframe('profile output.html') # run exploration to html output
+        #rp.to_file('profile output.html') # run exploration to html output
+        components.html(rp, height=800, width=1200)
         
 
