@@ -106,6 +106,6 @@ if fulldf is not None:
         rp = ProfileReport(exp_data)
 
     #st_profile_report(rp)
-        rp.to_file('profile output.html') # run exploration to html output
+        rp.to_notebook_iframe('profile output.html') # run exploration to html output
         
 
