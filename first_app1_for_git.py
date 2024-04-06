@@ -78,12 +78,12 @@ def load_data():
         else:
             query = "SELECT * FROM "+schema+"."+table
 
-        try:       
-            df = pd.read_sql(query, sql_conn,coerce_float=True)
-        except:
-            st.write('no connection')
+            try:       
+                df = pd.read_sql(query, sql_conn,coerce_float=True)
+            except:
+                st.write('no connection')
 
-        return df
+            return df
 
 fulldf = load_data()
 
