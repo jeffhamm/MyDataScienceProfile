@@ -65,18 +65,24 @@ def load_data():
             df = pd.read_csv(uploaded_file)
             
     elif option == 'sql' and schema and table and serv and db:
-        sql_conn = pyodbc.connect('DRIVER={ODBC Driver 13 for SQL Server}; \
-                            SERVER=serv; \
-                            DATABASE=db; \
-                            Trusted_Connection=yes')
+
+        try:
+
+            sql_conn = pyodbc.connect('DRIVER={ODBC Driver 13 for SQL Server}; \
+                                SERVER=serv; \
+                                DATABASE=db; \
+                                Trusted_Connection=yes')
+        except:
+            st.write('Check your database settings')
         
-        query = "SELECT * FROM "+schema+"."+table
+        else:
+            query = "SELECT * FROM "+schema+"."+table
 
         try:       
             df = pd.read_sql(query, sql_conn,coerce_float=True)
         except:
-            st.write('Check your database settings')
-            
+            st.write('no connection')
+
         return df
 
 fulldf = load_data()
