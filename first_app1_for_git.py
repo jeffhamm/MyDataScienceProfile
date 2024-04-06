@@ -121,7 +121,7 @@ if fulldf is not None:
     
     exp_data[deccols].apply(pd.to_numeric)
     if not  exp_data.empty:
-        rp = ProfileReport(exp_data).to_html()
+        rp = ProfileReport(exp_data, minimal = mini).to_html()
 
     #st_profile_report(rp)
         #rp.to_file('profile output.html') # run exploration to html output
