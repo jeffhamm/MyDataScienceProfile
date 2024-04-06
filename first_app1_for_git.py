@@ -53,16 +53,7 @@ elif  option == 'sql':
     schema = st.text_input('Enter Schema')
     table = st.text_input('Enter Table')
 
-    
-    sql_conn = pyodbc.connect('DRIVER={ODBC Driver 13 for SQL Server}; \
-                                SERVER=serv; \
-                                DATABASE=db; \
-                                Trusted_Connection=yes')
-  
-
-    
-    query = "SELECT * FROM "+schema+"."+table
-    
+           
  
 # function to load data
 
@@ -78,7 +69,7 @@ def load_data():
                             SERVER=serv; \
                             DATABASE=db; \
                             Trusted_Connection=yes')
-  
+        query = "SELECT * FROM "+schema+"."+table
                
         df = pd.read_sql(query, sql_conn,coerce_float=True)
         return df
