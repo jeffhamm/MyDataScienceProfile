@@ -67,6 +67,7 @@ def load_data():
                 df = pd.read_csv(uploaded_file)
             except:
                 st.write('File Not a CSV')
+            return df
             
     elif option == 'sql' and schema and table and serv and db:
 
