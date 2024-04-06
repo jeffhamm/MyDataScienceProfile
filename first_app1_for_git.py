@@ -26,15 +26,15 @@ option = st.sidebar.selectbox('select data source', ['csv', 'sql'])
 
 # based on the nature of data, you may want to turn correlation off for pandas profiling
 
-cor = st.sidebar.radio('Do you want correlations', ['False', 'True']) 
+cor = st.sidebar.radio('Include correlations', ['False', 'True']) 
 
 # based on the nature of data, you may want to use the minimal analysis option
 
-mini = st.sidebar.radio('Do you want minimal', ['True', 'False']) 
+mini = st.sidebar.radio('Do minimal Analysis', ['True', 'False']) 
 
 # based on the nature of data, you may want to turn exploration off
 
-explo = st.sidebar.radio('Do you want exploration', ['False', 'True'])
+explo = st.sidebar.radio('Do exploration', ['False', 'True'])
 
 # you may want to use a sample of the entire data for the exploration
 
@@ -121,7 +121,7 @@ if fulldf is not None:
     
     exp_data[deccols].apply(pd.to_numeric)
     if not  exp_data.empty:
-        rp = ProfileReport(exp_data).to_html()
+        rp = ProfileReport(exp_data, minimal = mini, Correlations = cor).to_html()
 
     #st_profile_report(rp)
         #rp.to_file('profile output.html') # run exploration to html output
