@@ -47,13 +47,18 @@ if option == 'csv':
     
 
 elif  option == 'sql':
-    
-    sql_conn = pyodbc.connect('DRIVER={ODBC Driver 13 for SQL Server}; \
-                                SERVER=SERVERNAME; \
-                                DATABASE=DATABASENAME; \
-                                Trusted_Connection=yes')
+
+    serv = st.text_input('Enter server address')
+    db = st.text_input('Enter server address')
     schema = st.text_input('Enter Schema')
     table = st.text_input('Enter Table')
+
+    
+    sql_conn = pyodbc.connect('DRIVER={ODBC Driver 13 for SQL Server}; \
+                                SERVER=serv; \
+                                DATABASE=db; \
+                                Trusted_Connection=yes')
+  
 
     
     query = "SELECT * FROM "+schema+"."+table
@@ -68,10 +73,15 @@ def load_data():
         if uploaded_file is not None :
             df = pd.read_csv(uploaded_file)
             
-    elif option == 'sql' and schema and table:
+    elif option == 'sql' and schema and table and serv and db:
+        sql_conn = pyodbc.connect('DRIVER={ODBC Driver 13 for SQL Server}; \
+                            SERVER=serv; \
+                            DATABASE=db; \
+                            Trusted_Connection=yes')
+  
                
         df = pd.read_sql(query, sql_conn,coerce_float=True)
-    return df
+        return df
 
 fulldf = load_data()
 
