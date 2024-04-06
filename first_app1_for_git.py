@@ -21,7 +21,7 @@ from PIL import Image
 st.title('Exploratory Data Analysis Tool with Streamlit')
 st.write('This tool is designed to speed up the EDA process from multiple data sources') 
 
-st.sidebar.markdown("""Browse to your file""")
+st.sidebar.markdown("""Exploratory data analysis with ydata_profiling""")
 option = st.sidebar.selectbox('select data source', ['csv', 'sql'])
 
 # based on the nature of data, you may want to turn correlation off for pandas profiling
@@ -62,7 +62,11 @@ def load_data():
     df = None
     if option == 'csv':
         if uploaded_file is not None :
-            df = pd.read_csv(uploaded_file)
+
+            try:
+                df = pd.read_csv(uploaded_file)
+            except:
+                st.write('File Not a CSV')
             
     elif option == 'sql' and schema and table and serv and db:
 
