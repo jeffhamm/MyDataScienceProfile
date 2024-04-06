@@ -49,7 +49,7 @@ if option == 'csv':
 elif  option == 'sql':
 
     serv = st.text_input('Enter server address')
-    db = st.text_input('Enter databasr')
+    db = st.text_input('Enter database')
     schema = st.text_input('Enter Schema')
     table = st.text_input('Enter Table')
 
@@ -71,8 +71,12 @@ def load_data():
                             Trusted_Connection=yes')
         
         query = "SELECT * FROM "+schema+"."+table
-               
-        df = pd.read_sql(query, sql_conn,coerce_float=True)
+
+        try:       
+            df = pd.read_sql(query, sql_conn,coerce_float=True)
+        except:
+            st.write('Check your database settings')
+            
         return df
 
 fulldf = load_data()
