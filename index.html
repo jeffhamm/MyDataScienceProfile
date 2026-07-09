@@ -1,15 +1,364 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeffrey N. A. Hammond | Senior Business Analyst</title>
+<meta name="description" content="Jeffrey N. A. Hammond — Senior Business Analyst at SSNIT, Ghana. Data engineering, analytics, machine learning and business intelligence in the pensions industry.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b1120; --bg2:#111a2e; --card:#16213a; --card2:#1b2745;
+  --text:#e6ecf7; --muted:#93a3bd; --accent:#38bdf8; --accent2:#fbbf24;
+  --border:rgba(147,163,189,.15);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+a{color:var(--accent);text-decoration:none}
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+section{padding:80px 0}
+h2.section-title{font-size:1.9rem;font-weight:800;margin-bottom:8px}
+.section-sub{color:var(--muted);margin-bottom:44px;max-width:640px}
+.accent{color:var(--accent)}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;background:rgba(11,17,32,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100}
+.nav-inner{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:800;font-size:1.05rem;color:var(--text)}
+.logo span{color:var(--accent)}
+.nav-links{display:flex;gap:26px}
+.nav-links a{color:var(--muted);font-size:.9rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--accent)}
+@media(max-width:720px){.nav-links{display:none}}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 60px;
+  background:radial-gradient(ellipse 60% 50% at 70% 20%,rgba(56,189,248,.08),transparent),
+             radial-gradient(ellipse 50% 40% at 20% 80%,rgba(251,191,36,.05),transparent)}
+.hero-grid{display:grid;grid-template-columns:1fr 300px;gap:56px;align-items:center}
+@media(max-width:820px){.hero-grid{grid-template-columns:1fr}.hero-photo{order:-1;justify-self:center}}
+.kicker{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:.9rem;margin-bottom:16px}
+.hero h1{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:800;line-height:1.15;margin-bottom:14px}
+.hero .role{font-size:1.25rem;color:var(--accent2);font-weight:600;margin-bottom:18px}
+.hero p.blurb{color:var(--muted);max-width:560px;margin-bottom:32px;font-size:1.05rem}
+.btn{display:inline-block;padding:13px 26px;border-radius:8px;font-weight:600;font-size:.95rem;transition:all .2s}
+.btn-primary{background:var(--accent);color:#08111f}
+.btn-primary:hover{background:#5ecdfa;transform:translateY(-2px)}
+.btn-ghost{border:1px solid var(--border);color:var(--text);margin-left:12px}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.hero-photo{width:280px;height:280px;border-radius:24px;overflow:hidden;border:1px solid var(--border);
+  background:linear-gradient(135deg,var(--card),var(--card2));position:relative;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;display:block;position:relative;z-index:2}
+.monogram{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:5rem;font-weight:800;color:var(--accent);font-family:'JetBrains Mono',monospace}
+.stats{display:flex;gap:40px;margin-top:44px;flex-wrap:wrap}
+.stat .num{font-size:1.9rem;font-weight:800;color:var(--accent)}
+.stat .lbl{color:var(--muted);font-size:.85rem}
+
+/* About */
+.about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:48px}
+@media(max-width:820px){.about-grid{grid-template-columns:1fr}}
+.about-grid p{color:var(--muted);margin-bottom:16px}
+.about-grid p strong{color:var(--text)}
+.focus-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px}
+.focus-card h3{font-size:1rem;margin-bottom:16px;color:var(--accent2)}
+.focus-card li{list-style:none;padding:9px 0;border-bottom:1px solid var(--border);color:var(--muted);font-size:.93rem}
+.focus-card li:last-child{border-bottom:0}
+.focus-card li::before{content:"▹ ";color:var(--accent)}
+
+/* Skills */
+#skills{background:var(--bg2)}
+.skill-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.skill-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px;transition:transform .2s,border-color .2s}
+.skill-card:hover{transform:translateY(-4px);border-color:rgba(56,189,248,.4)}
+.skill-card h3{font-size:1rem;margin-bottom:14px}
+.skill-card h3 .ic{margin-right:8px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{background:rgba(56,189,248,.1);color:var(--accent);border:1px solid rgba(56,189,248,.25);
+  padding:5px 12px;border-radius:20px;font-size:.8rem;font-family:'JetBrains Mono',monospace}
+
+/* Experience */
+.timeline{position:relative;padding-left:32px}
+.timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.tl-item{position:relative;padding-bottom:44px}
+.tl-item:last-child{padding-bottom:0}
+.tl-item::before{content:"";position:absolute;left:-32px;top:6px;width:16px;height:16px;border-radius:50%;
+  background:var(--bg);border:3px solid var(--accent)}
+.tl-item .period{font-family:'JetBrains Mono',monospace;color:var(--accent2);font-size:.82rem}
+.tl-item h3{font-size:1.15rem;margin:6px 0 2px}
+.tl-item .org{color:var(--accent);font-size:.95rem;font-weight:500;margin-bottom:12px}
+.tl-item ul{margin-left:18px;color:var(--muted);font-size:.95rem}
+.tl-item ul li{margin-bottom:7px}
+
+/* Projects */
+#projects{background:var(--bg2)}
+.featured{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:28px}
+.featured img{width:100%;display:block;border-bottom:1px solid var(--border);cursor:zoom-in;transition:opacity .2s}
+.featured img:hover{opacity:.9}
+.featured .body{padding:30px}
+.pill{display:inline-block;background:rgba(251,191,36,.12);color:var(--accent2);border:1px solid rgba(251,191,36,.3);
+  padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:14px}
+.featured h3{font-size:1.35rem;margin-bottom:10px}
+.featured p{color:var(--muted);margin-bottom:14px}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;display:flex;flex-direction:column;transition:transform .2s,border-color .2s}
+.proj-card:hover{transform:translateY(-4px);border-color:rgba(56,189,248,.4)}
+.proj-card h3{font-size:1.08rem;margin-bottom:10px}
+.proj-card p{color:var(--muted);font-size:.92rem;flex:1;margin-bottom:16px}
+.proj-card .tags{margin-top:auto}
+
+/* Education & certs */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:720px){.edu-grid{grid-template-columns:1fr}}
+.edu-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px}
+.edu-card h3{font-size:1rem;color:var(--accent2);margin-bottom:16px}
+.edu-item{padding:12px 0;border-bottom:1px solid var(--border)}
+.edu-item:last-child{border-bottom:0}
+.edu-item .t{font-weight:600;font-size:.95rem}
+.edu-item .s{color:var(--muted);font-size:.85rem}
+
+/* Contact */
+#contact{text-align:center}
+#contact p{color:var(--muted);max-width:520px;margin:0 auto 32px}
+.contact-links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+footer{border-top:1px solid var(--border);padding:28px 0;text-align:center;color:var(--muted);font-size:.85rem}
+
+/* Lightbox */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(5,8,16,.92);z-index:200;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:100%;border-radius:8px}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+</style>
 </head>
 <body>
-    <h1>Analytics Corner</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid, consectetur. Modi deleniti pariatur aliquam quas, voluptates perferendis incidunt, ad ratione veniam fuga culpa amet laboriosam, quam laborum quod ipsam nobis.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti accusantium ducimus, ullam aliquid aliquam tempore officia necessitatibus vel natus illo rem voluptatum voluptate optio nam provident deleniti ab quidem qui.</p>
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente neque odio minus fugiat quasi dolor suscipit tenetur maxime corporis, repellendus sunt, sequi quam, omnis at mollitia illo! Illum, iste deleniti?</p>
 
-</body>
-</html>
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Jeffrey<span>.</span>Hammond</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="kicker">Hello, I'm</div>
+      <h1>Jeffrey N. A. Hammond</h1>
+      <div class="role">Senior Business Analyst · Data Science &amp; Analytics</div>
+      <p class="blurb">I turn pensions and social-security data into actionable insight at the Social Security and National Insurance Trust (SSNIT), Ghana — building ETL pipelines, machine learning models, and BI dashboards that drive compliance, strategy, and operations.</p>
+      <a class="btn btn-primary" href="#projects">View My Work</a>
+      <a class="btn btn-ghost" href="#contact">Get In Touch</a>
+      <div class="stats">
+        <div class="stat"><div class="num">14+</div><div class="lbl">Years at SSNIT</div></div>
+        <div class="stat"><div class="num">7+</div><div class="lbl">Years in Analytics</div></div>
+        <div class="stat"><div class="num">Top 11</div><div class="lbl">Best Workers, SSNIT 2018</div></div>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="monogram">JH</div>
+      <img src="profile.jpg" alt="Jeffrey N. A. Hammond" onerror="this.style.display='none'">
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="container reveal">
+    <h2 class="section-title">About <span class="accent">Me</span></h2>
+    <p class="section-sub">Mathematician turned data professional in Ghana's pensions industry.</p>
+    <div class="about-grid">
+      <div>
+        <p>I'm a Senior Business Analyst at <strong>SSNIT</strong>, where I've spent over seven years in analytics after seven years in data management — giving me a rare end-to-end view of how social-security data is captured, validated, and turned into decisions.</p>
+        <p>My work spans <strong>data engineering</strong> (SQL Server, Oracle, SSIS, Tableau Prep), <strong>data science</strong> (Python, scikit-learn, predictive models for benefit payments and contribution collection), and <strong>business intelligence</strong> (Tableau Server administration and KPI dashboards used across departments).</p>
+        <p>With a foundation in <strong>Mathematics and Economics</strong>, I enjoy deriving the formulas behind the numbers — like the closed-form penalty computation and vectorised benefit-accrual methods now used in the Trust's operations. I also train and supervise analytics staff, and contributed to setting SSNIT's medium-term strategic objectives.</p>
+      </div>
+      <div class="focus-card">
+        <h3>What I Do</h3>
+        <ul>
+          <li>Operational analytics &amp; management reporting</li>
+          <li>ETL pipelines &amp; data warehousing</li>
+          <li>Machine learning &amp; predictive modelling</li>
+          <li>Tableau Server administration</li>
+          <li>Mathematical modelling of pension computations</li>
+          <li>Analytics training &amp; team leadership</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container reveal">
+    <h2 class="section-title">Technical <span class="accent">Skills</span></h2>
+    <p class="section-sub">Tools and technologies I use daily.</p>
+    <div class="skill-groups">
+      <div class="skill-card">
+        <h3><span class="ic">⌨️</span>Programming</h3>
+        <div class="tags"><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Scikit-learn</span><span class="tag">Streamlit</span><span class="tag">Dash</span><span class="tag">Matlab</span></div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="ic">🗄️</span>Databases &amp; ETL</h3>
+        <div class="tags"><span class="tag">MS SQL Server</span><span class="tag">Oracle</span><span class="tag">SSIS</span><span class="tag">Tableau Prep</span><span class="tag">TabPy</span></div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="ic">📊</span>BI &amp; Visualization</h3>
+        <div class="tags"><span class="tag">Tableau Desktop</span><span class="tag">Tableau Server</span><span class="tag">Power BI</span><span class="tag">Oracle Analytics</span><span class="tag">Excel</span><span class="tag">Gephi</span></div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="ic">🧮</span>Analytics &amp; Modelling</h3>
+        <div class="tags"><span class="tag">Machine Learning</span><span class="tag">Forecasting</span><span class="tag">Optimization</span><span class="tag">Statistical Analysis</span><span class="tag">Business Analysis</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="container reveal">
+    <h2 class="section-title">Professional <span class="accent">Experience</span></h2>
+    <p class="section-sub">14+ years at Ghana's national pension trust.</p>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="period">April 2018 — Present</div>
+        <h3>Senior Business Analyst</h3>
+        <div class="org">Social Security and National Insurance Trust (SSNIT)</div>
+        <ul>
+          <li>Analyze operational data and deliver actionable insight to Management through Tableau visualizations.</li>
+          <li>Build and maintain ETL pipelines across SQL Server, Oracle, SSIS, Tableau Prep, and TabPy.</li>
+          <li>Developed models on government data to uncover workers whose employers default on contributions.</li>
+          <li>Create machine learning models predicting future benefit payments and contribution collection.</li>
+          <li>Administer Tableau Server for the Analytics department and wider user base; train users to consume analytic content.</li>
+          <li>Build KPI dashboards for staff performance; direct and supervise analytics staff.</li>
+          <li>Worked with the team defining SSNIT's medium-term strategic objectives and targets.</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="period">October 2011 — March 2018</div>
+        <h3>Data Management Officer</h3>
+        <div class="org">Social Security and National Insurance Trust (SSNIT)</div>
+        <ul>
+          <li>Managed employee and employer data; validated member contribution reports.</li>
+          <li>Acted as Management Information System Coordinator in a multifunctional role.</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="period">September 2006 — May 2007</div>
+        <h3>Mathematics Teaching Assistant</h3>
+        <div class="org">University of Ghana, Legon</div>
+        <ul>
+          <li>Assisted lecturers in the Mathematics Department with teaching first-year students and marking examinations.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container reveal">
+    <h2 class="section-title">Featured <span class="accent">Projects</span></h2>
+    <p class="section-sub">Selected work in analytics, BI, and mathematical modelling.</p>
+
+    <div class="featured">
+      <img src="BIG PUSH1.png" alt="BIG PUSH construction projects compliance monitoring dashboard" onclick="openLightbox(this.src)">
+      <div class="body">
+        <div class="pill">Featured · BI Dashboard</div>
+        <h3>"Big Push" Projects Compliance Dashboard</h3>
+        <p>An interactive Tableau dashboard monitoring SSNIT compliance across Ghana's Big Push infrastructure projects — tracking 74 projects, contractor registrations, labour-force dynamics, inspection recency, and establishment liability status, filterable by area, enforcement branch, and contractor. Used by enforcement teams to prioritise site inspections and recover contributions for construction workers.</p>
+        <div class="tags"><span class="tag">Tableau</span><span class="tag">SQL</span><span class="tag">ETL</span><span class="tag">Compliance Analytics</span></div>
+      </div>
+    </div>
+
+    <div class="proj-grid">
+      <div class="proj-card">
+        <h3>Closed-Form Penalty Computation for Defaulted Contributions</h3>
+        <p>Derived a formula computing the total penalty payable on defaulted pension contributions by combining the sum of a Geometric Progression with Compound Interest — replacing tedious month-by-month calculation with a single closed-form expression, including handling of part-payments made in between. Authored the methodology paper and implemented it in Excel for operational use.</p>
+        <div class="tags"><span class="tag">Mathematics</span><span class="tag">Excel</span><span class="tag">Policy Modelling</span></div>
+      </div>
+      <div class="proj-card">
+        <h3>Benefit Accrual Estimation for Accrual Accounting</h3>
+        <p>Designed the methodology estimating SSNIT's benefit liabilities under accrual accounting — covering processed-but-unpaid claims and eligible members yet to claim. Derived a vectorised lumpsum/past-credit accumulation formula whose pre-computable factor vectors make large-scale member computations efficient, with support for PNDCL 247 and Act 766 benefit schemes.</p>
+        <div class="tags"><span class="tag">Financial Modelling</span><span class="tag">Linear Algebra</span><span class="tag">SQL</span></div>
+      </div>
+      <div class="proj-card">
+        <h3>Employer Compliance Detection Models</h3>
+        <p>Built models on government datasets to uncover workers whose employers are not remitting social-security contributions — feeding enforcement action and improving contribution recovery for members.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Data Matching</span><span class="tag">SQL</span></div>
+      </div>
+      <div class="proj-card">
+        <h3>Predictive Models for Benefits &amp; Contributions</h3>
+        <p>Machine learning models forecasting future benefit payments and contribution collections, supporting the Trust's financial planning and medium-term strategy setting.</p>
+        <div class="tags"><span class="tag">Scikit-learn</span><span class="tag">Forecasting</span><span class="tag">Python</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="container reveal">
+    <h2 class="section-title">Education &amp; <span class="accent">Certifications</span></h2>
+    <p class="section-sub">Academic background and continuous learning.</p>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <h3>🎓 Education</h3>
+        <div class="edu-item">
+          <div class="t">MSc Industrial Mathematics (first year completed)</div>
+          <div class="s">Kwame Nkrumah University of Science and Technology · 2016<br>Differential equations, optimization, control theory, numerical methods (Matlab)</div>
+        </div>
+        <div class="edu-item">
+          <div class="t">BA Mathematics &amp; Economics</div>
+          <div class="s">University of Ghana, Legon · 2006<br>Linear algebra, real analysis, econometrics, statistics, programming in C</div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <h3>📜 Certifications</h3>
+        <div class="edu-item"><div class="t">IBM — Data Analysis with Python</div><div class="s">Coursera · 2023</div></div>
+        <div class="edu-item"><div class="t">IBM — Data Visualization with Python</div><div class="s">Coursera · 2023</div></div>
+        <div class="edu-item"><div class="t">IBM — Python for Data Science, AI &amp; Development</div><div class="s">Coursera · 2023</div></div>
+        <div class="edu-item"><div class="t">IBM — Databases and SQL for Data Science with Python</div><div class="s">Coursera · 2021</div></div>
+        <div class="edu-item"><div class="t">Stanford Online — Machine Learning (Andrew Ng)</div><div class="s">Coursera · 2020</div></div>
+        <div class="edu-item"><div class="t">Networking Essentials</div><div class="s">IPMC · 2011</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container reveal">
+    <h2 class="section-title">Get In <span class="accent">Touch</span></h2>
+    <p>Interested in data analytics, pensions modelling, or BI collaboration? I'd love to hear from you.</p>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="mailto:jeffhammond55@gmail.com">✉️ jeffhammond55@gmail.com</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/jeffrey-hammond-3ab07b155" target="_blank" rel="noopener">in&nbsp; LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">© <span id="yr"></span> Jeffrey N. A. Hammond · Accra, Ghana</div>
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('open')">
+  <img id="lightbox-img" src="" alt="Dashboard full view">
+</div>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+function openLightbox(src){
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+}), {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el))
